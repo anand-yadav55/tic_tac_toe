@@ -3,6 +3,7 @@ let player = {
   active: true,
 };
 let board = [];
+let gameEnd = false;
 
 // starter
 function Setup() {
@@ -43,23 +44,31 @@ function displayBoard() {
 }
 // check moves allowed
 function move(e) {
-  if (player.active) {
-    if (e.target.id >= 0 && e.target.id < 9 && positionAvailable(e)) {
-      board[e.target.id] = "P1";
-      // console.log("moved");
-      player.active = false;
+  if (!gameEnd) {
+    if (player.active) {
+      if (e.target.id >= 0 && e.target.id < 9 && positionAvailable(e)) {
+        board[e.target.id] = "P1";
+        // console.log("moved");
+        player.active = false;
+        displayBoard();
+      }
+    }
+    // window.setTimeout(() => {
+    if (!player.active) {
+      aiMove();
+      player.active = true;
       displayBoard();
     }
+    // }, 500);
+    // console.log(board);
+    checkWinner();
   }
-  // window.setTimeout(() => {
-  if (!player.active) {
-    aiMove();
-    player.active = true;
-    displayBoard();
+  if (gameEnd) {
+    let resetButton = document.createElement("button");
+    resetButton.setAttribute("class", "reset");
+    resetButton.textContent = "RESET";
+    document.getElementById("app").appendChild(resetButton);
   }
-  // }, 500);
-  console.log(board);
-  checkWinner();
 }
 function positionAvailable(e) {
   return !e.target.classList.contains("filled");
@@ -85,7 +94,13 @@ function availableMovesForP2() {
   }
   return arr;
 }
-
+// remove click event listener
+function removeBoxClickEvent() {
+  let box = document.getElementsByClassName("box");
+  for (i = 0; i < box.length; i++) {
+    box[i].removeEventListener("click", move);
+  }
+}
 // winning conditions
 function checkWinner() {
   const conditions = [
@@ -99,7 +114,6 @@ function checkWinner() {
     [2, 4, 6],
   ];
   //All equal check
-  const allEqual = (arr) => arr.every((val) => val === arr[0]);
 
   for (let i of conditions) {
     let countP = 0,
@@ -113,19 +127,29 @@ function checkWinner() {
     }
     if (countP == 3) {
       console.log("P1 won");
+      document.getElementsByClassName("msg")[0].innerHTML = "You WON";
+      gameEnd = true;
+      removeBoxClickEvent();
       return;
     } else if (countC == 3) {
       console.log("C won");
+      document.getElementsByClassName("msg")[0].innerHTML = "Computer WON";
+      gameEnd = true;
+      removeBoxClickEvent();
       return;
     }
-    // if (allEqual(i)) {
-    //   if (board[] == "P1") {
-    //     console.log("winner P1");
-    //   }
-    //   if ( == "C") {
-    //     console.log("winner C");
-    //   }
-    // }
+  }
+  let tmp = 0;
+  for (i = 0; i < board.length; i++) {
+    if (board[i] != "B") {
+      tmp++;
+    }
+  }
+  if (tmp == 9) {
+    gameEnd = true;
+    document.getElementsByClassName("msg")[0].innerHTML = "TIE";
+    removeBoxClickEvent();
+    return;
   }
 }
 

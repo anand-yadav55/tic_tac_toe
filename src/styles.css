@@ -23,37 +23,21 @@ p {
 #white {
   height: 60px;
   width: 60px;
-  border: 10px solid black;
-  float: left;
-  background-color: white;
+  display: inline-block;
+  border: 1px ridge;
+  background-color: rebeccapurple;
+  transform: translateY(20px);
 }
 #black {
   height: 60px;
   width: 60px;
-  float: right;
-  border: 10px solid black;
-  background-color: black;
+  display: inline-block;
+  border: 1px ridge;
+  background-color: yellowgreen;
+  transform: translateY(20px);
 }
-.options {
-  visibility: visible;
-  width: 200px;
-  height: 100px;
-  z-index: 2;
-}
-
-table {
-  position: absolute;
-  left: 50%;
-  margin-left: -90px;
-  top: 10%;
-  z-index: 1;
-  visibility: hidden;
-}
-td {
-  height: 60px;
-  width: 60px;
-  border: 5px solid black;
-  border-radius: 10%;
+p {
+  display: inline;
 }
 /* new css */
 .box {
@@ -62,6 +46,7 @@ td {
   border: 1px solid;
   display: inline-block;
   margin: 10px;
+  border: 1px ridge #f7aeb7;
   background: #fff;
 }
 .filled {
@@ -72,4 +57,12 @@ td {
 }
 .C {
   background-color: rebeccapurple;
+}
+.msg {
+  margin: 10px;
+  color: red;
+  font-weight: bold;
+}
+.msg::before {
+  content: ".";
 }
