@@ -55,3 +55,21 @@ td {
   border: 5px solid black;
   border-radius: 10%;
 }
+/* new css */
+.box {
+  height: 100px;
+  width: 100px;
+  border: 1px solid;
+  display: inline-block;
+  margin: 10px;
+  background: #fff;
+}
+.filled {
+  background-color: #000000;
+}
+.P1 {
+  background-color: yellowgreen;
+}
+.C {
+  background-color: rebeccapurple;
+}
